@@ -11,7 +11,7 @@ public class Main {
         Menu.Initialize();
 
         int option = Menu.getMenuOption();
-        while (option != 6){
+        while (option != 7){
             switch (option){
                 case 1:
                     JOptionPane.showMessageDialog(null, "Something happening here");

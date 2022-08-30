@@ -15,8 +15,9 @@ public class Menu {
             int index = 0;
             // Loop through the options to type them in the menu
             for(String option: options) {
-                menu.append("\n").append(index).append(")").append(option);
                 ++index;
+                menu.append("\n").append(index).append(")").append(option);
+                
             }
         }
     }
