@@ -12,7 +12,11 @@ public class Main {
 
         int option = Menu.getMenuOption();
         while (option != 6){
-            JOptionPane.showMessageDialog(null, "SHow something happenig here");
+            switch (option){
+                case 1:
+                    JOptionPane.showMessageDialog(null, "Something happening here");
+                    break;
+            }
             option = Menu.getMenuOption();
         }
     }
