@@ -1,58 +1,60 @@
 package com.cop3337;
 
 public class Product {
+    private int id;
     private Manufacturer manufacturer;
-    private String Name;
+    private String name;
     private int quantity;
     private double unitPrice;
 
     public Product(Manufacturer manufacturer, String name, int quantity, double unitPrice) {
         this.manufacturer = manufacturer;
-        Name = name;
+        this.name = name;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
-    }
-
-    public Product() {
     }
 
     public Manufacturer getManufacturer() {
         return manufacturer;
     }
 
-    public void setManufacturer(Manufacturer manufacturer) {
+    public Product setManufacturer(Manufacturer manufacturer) {
         this.manufacturer = manufacturer;
+        return this;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
-    public void setName(String name) {
-        Name = name;
+    public Product setName(String _name) {
+        name = _name;
+        return this;
     }
 
     public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public Product setQuantity(int quantity) {
         this.quantity = quantity;
+        return this;
     }
 
     public double getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(double unitPrice) {
+    public Product setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;
+        return this;
     }
 
     @Override
     public String toString() {
         return "Product{" +
                 "manufacturer=" + manufacturer +
-                ", Name='" + Name + '\'' +
+                ", Name='" + name + '\'' +
                 ", quantity=" + quantity +
                 ", unitPrice=" + unitPrice +
                 '}';

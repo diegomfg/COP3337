@@ -3,14 +3,15 @@ package com.cop3337;
 import javax.swing.*;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 
-public class Menu {
+public class UI {
     private static String[] options = new String[] { "Create new Product",
             "View Product",
+            "View all Products",
             "Update Product",
             "Delete Product",
-            "Register Sale",
-            "Update Ordered Products",
+            "Create Manufacturer",
             "Exit" };
     private static String header = "FIU International Bank "
             + DateFormat.getDateInstance(DateFormat.LONG).format(new Date());
@@ -45,5 +46,29 @@ public class Menu {
      */
     static int getOption() {
         return Integer.parseInt(JOptionPane.showInputDialog(menu));
+    }
+
+    static double getDouble(String message){
+        return Double.parseDouble(JOptionPane.showInputDialog(null, message));
+    }
+
+    static String getString(String message){
+        return JOptionPane.showInputDialog(null, message);
+    }
+
+    static int getInt(String message){
+        return Integer.parseInt(JOptionPane.showInputDialog(null, message));
+    }
+    
+    static int getId(String message){
+        return Integer.parseInt(JOptionPane.showInputDialog(null, message));
+    }
+
+    static void ViewSingleProduct(Product product){
+        JOptionPane.showMessageDialog(null, "This is a single product");
+    }
+
+    static void showMessage(String message){
+        JOptionPane.showMessageDialog(null, message);
     }
 }
