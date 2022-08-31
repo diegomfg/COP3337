@@ -6,37 +6,23 @@ import java.util.List;
 
 public class Database {
   private List<Product> products;
-  private List<Manufacturer> manufacturers;
   private List<Product> deletedProducts;
 
   public Database() {
     this.products = new ArrayList<>(Arrays.asList(
         new Product(
-            new Manufacturer("Echo", "CA"),
+            new Manufacturer("Echo", new Address("CA")),
             "Chainsaw", 5, 199.99)));
+    
+    this.deletedProducts = new ArrayList<>();
   }
 
-  public String findAllProducts(){
-    System.out.println(this.products);
-    
-    StringBuilder sb = new StringBuilder();
-    int index = 0;
-    for(Product p : this.products){
-      ++index;
-      sb.append("---Product #" + index + "---\n" + "Manufacturer Name: ")
-        .append(p.getManufacturer().getName())
-        .append("\nManufacturer Address: ")
-        .append(p.getManufacturer().getAddress())
-        .append("\nProcuct Name: ")
-        .append(p.getName())
-        .append("\nAvailable Quantity: ")
-        .append(p.getQuantity())
-        .append("\nPrice per unit: ")
-        .append(p.getUnitPrice())
-        .append("\n");
-    }
+  public List<Product> findAllProducts(){
+    return this.products;
+  }
 
-    return sb.toString();
+  public List<Product> findInactiveProducts(){
+    return this.deletedProducts;
   }
 
   public boolean insertProduct(Product product){
@@ -44,8 +30,8 @@ public class Database {
     return this.products.add(product);
   }
 
-  public String findProduct(int index){
-    return this.products.get(index - 1).toString();
+  public Product findProduct(int index){
+    return this.products.get(index - 1);
   }
 
   public boolean deleteProduct(int index){
@@ -59,9 +45,5 @@ public class Database {
                 .setQuantity(quantities)
                 .setUnitPrice(newPrice)
                 .toString();
-  }
-
-  public boolean insertManufacturer(Manufacturer manufacturer){
-    return this.manufacturers.add(manufacturer);
   }
 }

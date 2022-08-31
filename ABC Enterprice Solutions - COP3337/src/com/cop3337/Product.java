@@ -1,17 +1,22 @@
 package com.cop3337;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 public class Product {
     private int id;
     private Manufacturer manufacturer;
     private String name;
     private int quantity;
     private double unitPrice;
+    private String purchaseDate;
 
     public Product(Manufacturer manufacturer, String name, int quantity, double unitPrice) {
         this.manufacturer = manufacturer;
         this.name = name;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
+        this.purchaseDate = DateFormat.getDateInstance(DateFormat.LONG).format(new Date());
     }
 
     public Manufacturer getManufacturer() {
@@ -53,6 +58,10 @@ public class Product {
     public double getUnitPrice() {
         return unitPrice;
     }
+
+    public String getPurchaseDate() {
+        return purchaseDate;
+      }
 
     public Product setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;

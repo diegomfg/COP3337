@@ -3,9 +3,9 @@ package com.cop3337;
 public class Manufacturer {
 
     private String Name;
-    private String address;
+    private Address address;
 
-    public Manufacturer(String name, String address) {
+    public Manufacturer(String name, Address address) {
         this.address = address;
         Name = name;
     }
@@ -21,11 +21,11 @@ public class Manufacturer {
         Name = name;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 

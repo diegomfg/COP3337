@@ -11,6 +11,7 @@ public class UI {
             "View all Products",
             "Update Product",
             "Delete Product",
+            "View Inactive Products",
             "Exit" };
     private static String header = "FIU International Bank "
             + DateFormat.getDateInstance(DateFormat.LONG).format(new Date());
@@ -54,14 +55,43 @@ public class UI {
     }
     
     static int getId(String message){
-        return Integer.parseInt(JOptionPane.showInputDialog(null, message, "View Title"));
-    }
-
-    static void ViewSingleProduct(Product product){
-        JOptionPane.showMessageDialog(null, "View Single Product");
+        return Integer.parseInt(JOptionPane.showInputDialog(null, message));
     }
 
     static void showMessage(String message){
         JOptionPane.showMessageDialog(null, message);
+    }
+
+    static void showSingleProduct(Product product){
+        StringBuilder sb = new StringBuilder();
+        
+          sb.append("Product\tPurchase Date\tQuantity\tPrice\tManufacturer\tState\n")
+            .append(product.getName() + "\t" 
+                  + product.getPurchaseDate() + "\t"
+                  + product.getQuantity() + "\t"
+                  + product.getUnitPrice() + "\t"
+                  + product.getManufacturer().getName() + "\t"
+                  + product.getManufacturer().getAddress() + "\n");
+        
+    
+        JOptionPane.showMessageDialog(null, sb.toString());
+    }
+
+    static void showAllProducts(List<Product> products){
+        StringBuilder sb = new StringBuilder();
+        int index = 0;
+        sb.append("Product\tPurchase Date\tQuantity\tPrice\tManufacturer\tState\n");
+        for(Product p : products){
+          ++index;
+    
+          sb
+            .append(p.getName() + "\t" 
+                  + p.getPurchaseDate() + "\t"
+                  + p.getQuantity() + "\t"
+                  + p.getUnitPrice() + "\t"
+                  + p.getManufacturer().getName() + "\t"
+                  + p.getManufacturer().getAddress() + "\n");
+        }
+        JOptionPane.showMessageDialog(null, sb.toString());
     }
 }
