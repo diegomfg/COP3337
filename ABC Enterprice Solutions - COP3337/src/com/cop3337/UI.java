@@ -11,7 +11,6 @@ public class UI {
             "View all Products",
             "Update Product",
             "Delete Product",
-            "Create Manufacturer",
             "Exit" };
     private static String header = "FIU International Bank "
             + DateFormat.getDateInstance(DateFormat.LONG).format(new Date());
@@ -38,12 +37,6 @@ public class UI {
         }
     }
 
-    /**
-     * Parses the input received from the main menu and returns the numeric value of
-     * the option.
-     * 
-     * @return Integer
-     */
     static int getOption() {
         return Integer.parseInt(JOptionPane.showInputDialog(menu));
     }
@@ -61,11 +54,11 @@ public class UI {
     }
     
     static int getId(String message){
-        return Integer.parseInt(JOptionPane.showInputDialog(null, message));
+        return Integer.parseInt(JOptionPane.showInputDialog(null, message, "View Title"));
     }
 
     static void ViewSingleProduct(Product product){
-        JOptionPane.showMessageDialog(null, "This is a single product");
+        JOptionPane.showMessageDialog(null, "View Single Product");
     }
 
     static void showMessage(String message){

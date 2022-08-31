@@ -32,6 +32,15 @@ public class Product {
         return this;
     }
 
+    public int getId() {
+        return id;
+      }
+  
+      public Product setId(int id) {
+        this.id = id;
+        return this;
+      }
+
     public int getQuantity() {
         return quantity;
     }
@@ -52,11 +61,11 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "manufacturer=" + manufacturer +
-                ", Name='" + name + '\'' +
-                ", quantity=" + quantity +
-                ", unitPrice=" + unitPrice +
-                '}';
+        return  "Manufacturer Name: " + manufacturer.getName() +
+                "\nManufacturer Address: " + manufacturer.getAddress() +
+                "\nName='" + name + '\'' +
+                "\nQuantity=" + quantity +
+                "\nUnit Price=" + unitPrice;
     }
+
 }
