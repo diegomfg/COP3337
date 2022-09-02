@@ -2,7 +2,7 @@ package com.cop3337;
 
 import java.text.DateFormat;
 import java.util.Date;
-
+import com.cop3337.*;
 public class Product {
     private int id;
     private Manufacturer manufacturer;

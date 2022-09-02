@@ -3,6 +3,7 @@ package com.cop3337;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import com.cop3337.*;
 
 public class Database {
   private List<Product> products;

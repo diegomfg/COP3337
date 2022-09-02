@@ -1,8 +1,6 @@
 package com.cop3337;
 
-import com.cop3337.Product;
-import com.cop3337.Manufacturer;
-import com.cop3337.UI;
+import com.cop3337.*;
 /**
  * @author Diego Matheus. Volha Schultz
  */
