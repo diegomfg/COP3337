@@ -67,7 +67,7 @@ public class Main {
                 }
                 option = UI.getOption();
             }
-        } catch (IndexOutOfBoundsException e) {
+        } catch (Exception e) {
             UI.showMessage("Unable to find the requested resource");
         }
     }
