@@ -1,7 +1,8 @@
 package com.cop3337;
 
-import javax.swing.*;
-
+import com.cop3337.Product;
+import com.cop3337.Manufacturer;
+import com.cop3337.UI;
 /**
  * @author Diego Matheus. Volha Schultz
  */
