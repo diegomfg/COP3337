@@ -1,6 +1,6 @@
 package com.cop3337;
 
-import com.cop3337.*;
+    import com.cop3337.*;
 /**
  * @author Diego Matheus. Volha Schultz
  */
@@ -54,7 +54,7 @@ public class Main {
                             break;
                         };
 
-                        UI.showMessage("Coudln't find the specified product");
+                        UI.showMessage("Couldn't find the specified product");
                     break;
                     case 6:
                         // List deleted (inactive) products
@@ -67,7 +67,9 @@ public class Main {
                 option = UI.getOption();
             }
         } catch (Exception e) {
-            UI.showMessage("Unable to find the requested resource");
+            if(e instanceof IndexOutOfBoundsException){
+                UI.showMessage("Unable to find the requested resource");
+            }
         }
     }
 }
