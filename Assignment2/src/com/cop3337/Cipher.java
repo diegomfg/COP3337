@@ -30,7 +30,13 @@ public abstract class Cipher {
          * The encoded message string is tokenized into individual words,
          * and each word is encoded by calling the decode method
          */
-        // Supply the code that will decrypt the encrypted string
+        decrypted_message = new StringBuffer();
+        StringTokenizer words = new StringTokenizer(message);
+        while(words.hasMoreTokens()){
+            String w = words.nextToken();
+            w = decode(w) + " ";
+            decrypted_message.append(w);
+        }
     }
 
     public String getEncodedMessage() {
@@ -44,4 +50,8 @@ public abstract class Cipher {
     public abstract String encode(String s);
 
     public abstract String decode(String s);
+
+    public String reverseText(String code) {
+        return null;
+    }
 }
