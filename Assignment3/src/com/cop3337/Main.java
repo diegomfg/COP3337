@@ -14,45 +14,45 @@ public class Main {
                 "\n4)Read file" +
                 "\n5)Search in file" +
                 "\n6)Exit";
+        int option = -1;
+        FileController fc = new FileController();
 
-        JFileChooser chooser = new JFileChooser();
-
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "JPG & Text Images", "jpg", "txt");
-
-        chooser.setFileFilter(filter);
-
-        int returnVal = chooser.showOpenDialog(null);
+        int returnVal = fc.chooseFile();
 
         if(returnVal == JFileChooser.APPROVE_OPTION) {
 
-            System.out.println("You chose to open this file: " +
-                    chooser.getSelectedFile().getAbsolutePath());
+            option = Integer.parseInt(JOptionPane.showInputDialog(null, menuOptions));
 
             // Get option from menu
-            String option = JOptionPane.showInputDialog(null,menuOptions);
-
+            while(option != 6){
+            
                switch (option){
-                   case "1":
+                   case 1:
+                        // Make a copy
                        JOptionPane.showMessageDialog(null,"You selected #1");
                        break;
-                   case "2":
+                   case 2:
+                        // Write to file (Overwrite or append)    
                        JOptionPane.showMessageDialog(null,"You selected #2");
                        break;
-                   case "3":
+                   case 3:
+                        // Display file info
                        JOptionPane.showMessageDialog(null,"You selected #3");
                        break;
-                   case "4":
+                   case 4:
+                        // Read file contents
                        JOptionPane.showMessageDialog(null,"You selected #4");
                        break;
-                   case "5":
+                   case 5:
+                        // Search string in file
                        JOptionPane.showMessageDialog(null,"You selected #5");
                        break;
 
                    default:
-                       option = JOptionPane.showInputDialog("Wrong Option\n"+menuOptions);
+                       option = Integer.parseInt(JOptionPane.showInputDialog("Wrong Option\n" + menuOptions));
                        break;
-           }
+                }
+            }
         }
     }
 }
