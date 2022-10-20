@@ -21,37 +21,34 @@ public class Main {
 
         if(returnVal == JFileChooser.APPROVE_OPTION) {
 
-            option = Integer.parseInt(JOptionPane.showInputDialog(null, menuOptions));
-
+            option = Integer.parseInt(JOptionPane.showInputDialog(menuOptions));
+            
             // Get option from menu
             while(option != 6){
             
                switch (option){
                    case 1:
                         // Make a copy
-                       JOptionPane.showMessageDialog(null,"You selected #1");
+                       fc.makeFileCopy();
                        break;
                    case 2:
-                        // Write to file (Overwrite or append)    
-                       JOptionPane.showMessageDialog(null,"You selected #2");
+                        fc.writeToFile(); 
                        break;
                    case 3:
-                        // Display file info
-                       JOptionPane.showMessageDialog(null,"You selected #3");
+                        fc.displayFileInfo();
                        break;
                    case 4:
-                        // Read file contents
-                       JOptionPane.showMessageDialog(null,"You selected #4");
+                        fc.readFileContents();
                        break;
                    case 5:
-                        // Search string in file
-                       JOptionPane.showMessageDialog(null,"You selected #5");
+                        fc.searchInFile();
                        break;
 
                    default:
                        option = Integer.parseInt(JOptionPane.showInputDialog("Wrong Option\n" + menuOptions));
                        break;
                 }
+                option = Integer.parseInt(JOptionPane.showInputDialog(menuOptions));
             }
         }
     }
