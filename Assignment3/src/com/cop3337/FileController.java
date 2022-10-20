@@ -119,6 +119,28 @@ class FileController {
 
   public void searchInFile() {
     String search = JOptionPane.showInputDialog("Type word to search for ");
+    int index = 0;
+
+    try {
+      BufferedReader br = new BufferedReader(new FileReader(this.file));
+      StringBuilder sb = new StringBuilder();
+      String line = br.readLine();
+
+        while (line != null) {
+
+            if(line.toLowerCase().contains(search.toLowerCase())){
+              sb.append("On line: " + index + "\t" + line + "\n");
+            }
+
+            index++;
+            line = br.readLine();
+
+        }
+        
+        JOptionPane.showMessageDialog(null, sb.toString());
+    } catch (Exception e){
+      System.out.println("Error reading contents");
+    }
   }
   
 }
