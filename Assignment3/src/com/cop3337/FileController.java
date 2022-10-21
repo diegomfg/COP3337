@@ -1,16 +1,20 @@
 package com.cop3337;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.util.StringTokenizer;
 
 import javax.swing.JFileChooser;
@@ -24,7 +28,7 @@ class FileController {
   private FileInputStream fis;
   private FileOutputStream fos;
   private File file;
-  private StringTokenizer tokenizer;
+  private BufferedReader stringBuffer;
 
   public FileController(){
     this.chooser = new JFileChooser();
@@ -34,7 +38,6 @@ class FileController {
     chooser.setFileFilter(filter);
     this.fis = null;
     this.fos = null;
-    this.tokenizer = null;
   }
 
   public int chooseFile(){
@@ -42,6 +45,7 @@ class FileController {
     int result = this.chooser.showOpenDialog(null);
     
     try {
+      
       // StringTokenizer tokenizer = new StringTokenizer(null)
       this.file = this.chooser.getSelectedFile();
       this.fis = new FileInputStream(this.file);
@@ -58,16 +62,20 @@ class FileController {
   }
 
   public void makeFileCopy(){
+
       JOptionPane.showMessageDialog(null,"Making file copy of " + this.chooser.getSelectedFile());
+      
+      // create file copy filename and extension
       String filename = "filecopy";
-      String extension = this.file.getName().contains(".jpeg") ? ".jpeg" : ".txt";
+      String extension = this.file.getName().contains(".jpeg") || this.file.getName().contains(".jpg") ? ".jpeg" : ".txt";
       
       try {
+        // Writing the URI for output
         this.fos = new FileOutputStream(this.file.getParent() + "/" + filename + extension);
         byte[] buffer = new byte[1024];
       
         int length;
-
+        // Copies the bytes line by line onto the new FileOutputStream
         while ((length = fis.read(buffer)) > 0) {
             System.out.println(buffer);
             fos.write(buffer, 0, length);
@@ -81,13 +89,43 @@ class FileController {
     int option = Integer.parseInt(JOptionPane.showInputDialog("Write to file\n1)Ovewrite File\n2)Append to file"));
 
     switch(option){
+
       case 1:
-      String line = JOptionPane.showInputDialog(null, "Enter the text to overwrite file with");
-      
+
+        String line = JOptionPane.showInputDialog(null, "Enter the text to overwrite file with");
+        try(FileWriter fw = new FileWriter(this.file.getAbsolutePath(), false);
+
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter out = new PrintWriter(bw))
+        {
+            out.println(line);
+            //more code
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error writing to file");
+            System.out.println(e.getMessage());
+        }
+
       break;
+
       case 2:
-      String line2 = JOptionPane.showInputDialog(null, "Enter the text to append to file");
+
+
+          String line2 = JOptionPane.showInputDialog(null, "Enter the text to append to file");
+          try(FileWriter fw = new FileWriter(this.file.getAbsolutePath(), true);
+        
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter out = new PrintWriter(bw))
+        {
+            out.println(line2);
+            //more code
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error writing to file");
+            System.out.println(e.getMessage());
+        }
+
+
       break;
+
       default:
       JOptionPane.showMessageDialog(null,"You have selected an invalid option");
       break;
@@ -95,45 +133,65 @@ class FileController {
   }
 
   public void displayFileInfo() {
+    StringBuilder info = new StringBuilder();
+
+    // load the file in the buffered reader
+    try {
+      this.stringBuffer = new BufferedReader(new FileReader(this.file));
+    } catch (Exception e) {
+      JOptionPane.showMessageDialog(null, "Unable to find file");
+    }
+    // create string info
+    info.append("\tFile Info")
+        .append("\nFilename: " + this.file.getName())
+        .append("\nAbsolute Path: " + this.file.getAbsolutePath())
+        .append("\nParent Directory: " + this.file.getParent());
+    
+    // display info as String
+    JOptionPane.showMessageDialog(null, info.toString());
   }
 
   public void readFileContents() {
-    
     try {
-      BufferedReader br = new BufferedReader(new FileReader(this.file));
+        this.stringBuffer = new BufferedReader(new FileReader(this.file));
         StringBuilder sb = new StringBuilder();
-        String line = br.readLine();
+        String line = stringBuffer.readLine();
 
+        // Reads file line by line and stores it into a StringBuilder
         while (line != null) {
             sb.append(line);
             sb.append(System.lineSeparator());
-            line = br.readLine();
+            line = stringBuffer.readLine();
         }
         String everything = sb.toString();
+        // Convert all the info to String
         JOptionPane.showMessageDialog(null, everything);
     } catch (Exception e){
+      JOptionPane.showMessageDialog(null,"Error trying to open file");
       System.out.println("Error");
     }
 
   }
 
   public void searchInFile() {
-    String search = JOptionPane.showInputDialog("Type word to search for ");
+    String search = JOptionPane.showInputDialog("Type word to search for: ");
     int index = 0;
 
     try {
-      BufferedReader br = new BufferedReader(new FileReader(this.file));
+
+      this.stringBuffer = new BufferedReader(new FileReader(this.file));
       StringBuilder sb = new StringBuilder();
-      String line = br.readLine();
+      String line = stringBuffer.readLine();
+      
 
         while (line != null) {
-
+          
             if(line.toLowerCase().contains(search.toLowerCase())){
-              sb.append("On line: " + index + "\t" + line + "\n");
+              sb.append("On line: (" + index + "):\t" + line + "\n");
             }
 
             index++;
-            line = br.readLine();
+            line = stringBuffer.readLine();
 
         }
         
