@@ -44,7 +44,7 @@ public class Main {
                        break;
 
                    default:
-                       option = Integer.parseInt(JOptionPane.showInputDialog("Wrong Option\n" + menuOptions));
+                       option = Integer.parseInt(JOptionPane.showInputDialog("\t\t\tWrong Option\n" + menuOptions));
                        break;
                 }
                 option = Integer.parseInt(JOptionPane.showInputDialog(menuOptions));

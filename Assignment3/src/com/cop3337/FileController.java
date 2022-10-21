@@ -119,7 +119,7 @@ class FileController {
       break;
 
       default:
-      JOptionPane.showMessageDialog(null,"You have selected an invalid option");
+        JOptionPane.showMessageDialog(null,"You have selected an invalid option");
       break;
     }
   }
@@ -137,12 +137,16 @@ class FileController {
     info.append("\tFile Info")
         .append("\nFilename: " + this.file.getName())
         .append("\nAbsolute Path: " + this.file.getAbsolutePath())
-        .append("\nParent Directory: " + this.file.getParent());
+        .append("\nParent Directory: " + this.file.getParent())
+        .append("\nFile Size: " + (long)(this.file.getTotalSpace() / 1024) + "Kb.");
     
     // display info as String
     JOptionPane.showMessageDialog(null, info.toString());
   }
 
+  /**
+   * Reads all the file lines, one by one, using BufferedReader
+   */
   public void readFileContents() {
     try {
         this.stringBuffer = new BufferedReader(new FileReader(this.file));
@@ -166,7 +170,7 @@ class FileController {
   }
 
   public void searchInFile() {
-    String search = JOptionPane.showInputDialog("Type word to search for: ");
+    String search = JOptionPane.showInputDialog("Type keyword to search for: ");
     int index = 0;
 
     try {
@@ -187,7 +191,11 @@ class FileController {
 
         }
         
-        JOptionPane.showMessageDialog(null, sb.toString());
+        if(sb.length() > 0){
+          JOptionPane.showMessageDialog(null, sb.toString());
+        } else {
+          JOptionPane.showMessageDialog(null,"Coudln't find the keyword in file");
+        }
     } catch (Exception e){
       System.out.println("Error reading contents");
     }
