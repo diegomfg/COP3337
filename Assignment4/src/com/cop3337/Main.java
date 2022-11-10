@@ -5,5 +5,6 @@ class Main {
     System.out.println("Hello World: Diego Matheus & David Ulloa");
     Preprocessor p = new Preprocessor();
     p.chooseFile();
+    p.parseFile();
   }
 }

@@ -44,4 +44,7 @@ public class Preprocessor {
         }
     }
 
+    public void parseFile() {
+        Validation.parseFile(file);
+    }
 }
