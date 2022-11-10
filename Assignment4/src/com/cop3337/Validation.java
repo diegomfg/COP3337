@@ -4,7 +4,10 @@ import java.io.File;
 import java.util.HashMap;
 
 public class Validation {
-    private HashMap<String, Boolean> symbols;
+    // Index of delimiter, hasClose
+    private HashMap<Integer, Boolean> symbols;
+    // literally forgot what this is for ?
+    private HashMap<String, String> lineDelimiters;
 
     public static void parseFile(File file) {
         // final var lines = Files.readAllLines(Path.of("myfile.txt" || file?));

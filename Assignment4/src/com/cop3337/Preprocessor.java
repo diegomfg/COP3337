@@ -45,6 +45,10 @@ public class Preprocessor {
     }
 
     public void parseFile() {
+        // Move FileInputStream
+        // Move FileOutputStream
+        // Move BufferedReader to Validation class
+        // Initianize objects in parse file
         Validation.parseFile(file);
     }
 }
