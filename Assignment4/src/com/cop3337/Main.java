@@ -1,10 +1,13 @@
-package cop3337;
+package com.cop3337;
 
-class Main {`
+import java.io.File;
+
+class Main {
   public static void main(String[] args) {
     System.out.println("Hello World: Diego Matheus & David Ulloa");
+
     Preprocessor p = new Preprocessor();
     p.chooseFile();
-    p.parseFile();
+
   }
 }

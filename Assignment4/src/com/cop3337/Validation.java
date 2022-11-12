@@ -1,49 +1,66 @@
-package com.company;
+package com.cop3337;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.Stack;
 
+import javax.sound.sampled.Line;
+
 public class Validation {
-    // Index of delimiter, hasClose
-    private HashMap<Integer, Boolean> symbols;
-    // lineIndex, delimiterFound
-    private HashMap<Integer, String> lineDelimiters;
 
-    String[] rt_list = {"void", "boolean", "int", "double", "String", "Integer"};
+    private FileInputStream fis;
+    private BufferedReader stringBuffer;
+    private Stack<Character> stk;
+    private String expression = null;
+    private int length = -1;
+    private LinkedList<String> fileLines = null;
+    private String[] rt_list = { "void", "boolean", "int", "double", "String", "Integer" };
 
-    private Stack<Object> stk;
-    private String expression;
-    private int length;
-
-    public Validation(String expression) {
-        stk = new Stack<Object>();
-        this.expression = expression;
-        this.length = expression.length();
+    public Validation() {
+        stk = new Stack<Character>();
+        fileLines = new LinkedList<String>();
     }
 
-    public static void parseFile(File file) {
-        // final var lines = Files.readAllLines(Path.of("myfile.txt" || file?));
-        // FileWriter writer = new FileWriter( "output.txt");
-        // String data = " ";
-
-        // for (int i = 0; i < lines.size(); i++) {
-        // data = lines.get(i);
-        // StringTokenizer token = new StringTokenizer(data);
-        // while (token.hasMoreElements()) {
-        // writer.write(token.nextToken() + "\n");
-        // }
-        // }
-        // writer.close();
-        // }
+    public void parseFile(File file) {
         System.out.println("parsingFile...");
+        try {
+            stringBuffer = new BufferedReader(new FileReader(file));
+            String line;
+
+            // Loop through the lines and push to lines linked list
+            while ((line = stringBuffer.readLine()) != null) {
+
+                fileLines.push(line);
+
+                // 1) Pass each line to the delimitersValidation
+                // 2) Check for 'Public' 'class' 'classname' '{' -> push to stack (check for the
+                // closing brace and state if file is valid or not given {})
+
+                System.out.println("Is line balanced: " + isBalance(line));
+            }
+
+        } catch (Exception e) {
+            System.out.println("Validator exception (parseFile): " + e);
+        }
+
     }
 
     public boolean isValidStatement(String line) {
         try {
-            if (!isBalance(line)) return false;
+            if (!isBalance(line))
+                return false;
             String result = convert2Postfix(line);
         } catch (Exception e) {
             return false;
@@ -57,15 +74,44 @@ public class Validation {
 
     public boolean isBalance(String s) {
         Stack<Character> stack = new Stack<Character>();
-        for (char c : s.toCharArray()) {
-            if (c == '(')
-                stack.push(')');
-            else if (c == '{')
-                stack.push('}');
-            else if (c == '[')
-                stack.push(']');
-            else if (stack.isEmpty() || stack.pop() != c)
-                return false;
+        // refactor this
+        s = s.trim();
+        char[] chars = s.toCharArray();
+
+        for (int index = 0; index < chars.length; index++) {
+
+            char c = chars[index];
+
+            switch (c) {
+                // If character is an opening character, push to stack
+                case Constants.LEFT_PAR:
+                    stack.push('(');
+                    break;
+                // Opening brace
+                case Constants.LEFT_BRACE:
+                    stack.push('{');
+                    break;
+                // Opening bracket
+                case Constants.LEFT_BRACKET:
+                    stack.push('[');
+                    break;
+                // // If closing character, pop from stack
+                // case Constants.RIGHT_PAR:
+                // stack.pop();
+                // break;
+                // // Closing brace
+                // case Constants.RIGHT_BRACE:
+                // stack.pop();
+                // break;
+                // // Closing bracket
+                // case Constants.RIGHT_BRACKET:
+                // stack.pop();
+                // break;
+
+                default:
+                    break;
+            }
+
         }
         return stack.isEmpty();
     }
@@ -127,7 +173,7 @@ public class Validation {
         switch (top) {
             case Constants.MULTIPLICATION:
             case Constants.DIVISION:
-                switch(current) {
+                switch (current) {
                     case Constants.ADDITION:
                     case Constants.SUBTRACTION:
                         higher = true;
@@ -170,5 +216,10 @@ public class Validation {
         }
 
         return number;
+    }
+
+    public void setExpression(String expression) {
+        this.expression = expression;
+        this.length = expression.length();
     }
 }
