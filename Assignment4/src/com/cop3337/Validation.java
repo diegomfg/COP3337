@@ -22,19 +22,22 @@ public class Validation {
 
     private FileInputStream fis;
     private BufferedReader stringBuffer;
-    private Stack<Character> stk;
+    private Stack<Character> stack;
     private String expression = null;
     private int length = -1;
     private LinkedList<String> fileLines = null;
+    private boolean isBalanced = false;
     private String[] rt_list = { "void", "boolean", "int", "double", "String", "Integer" };
 
     public Validation() {
-        stk = new Stack<Character>();
+        stack = new Stack<Character>();
         fileLines = new LinkedList<String>();
     }
 
     public void parseFile(File file) {
+
         System.out.println("parsingFile...");
+
         try {
             stringBuffer = new BufferedReader(new FileReader(file));
             String line;
@@ -47,8 +50,7 @@ public class Validation {
                 // 1) Pass each line to the delimitersValidation
                 // 2) Check for 'Public' 'class' 'classname' '{' -> push to stack (check for the
                 // closing brace and state if file is valid or not given {})
-
-                System.out.println("Is line balanced: " + isBalance(line));
+                isBalanced = isBalanced(line);
             }
 
         } catch (Exception e) {
@@ -57,23 +59,7 @@ public class Validation {
 
     }
 
-    public boolean isValidStatement(String line) {
-        try {
-            if (!isBalance(line))
-                return false;
-            String result = convert2Postfix(line);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
-
-    public boolean isValidMethod(String line) {
-        return false;
-    }
-
-    public boolean isBalance(String s) {
-        Stack<Character> stack = new Stack<Character>();
+    private boolean isBalanced(String s) {
         // refactor this
         s = s.trim();
         char[] chars = s.toCharArray();
@@ -85,35 +71,50 @@ public class Validation {
             switch (c) {
                 // If character is an opening character, push to stack
                 case Constants.LEFT_PAR:
+                    System.out.println("Found opening parenthesis");
                     stack.push('(');
                     break;
                 // Opening brace
                 case Constants.LEFT_BRACE:
+                    System.out.println("Found opening brace");
                     stack.push('{');
                     break;
                 // Opening bracket
                 case Constants.LEFT_BRACKET:
+                    System.out.println("Found opening bracket");
                     stack.push('[');
                     break;
-                // // If closing character, pop from stack
-                // case Constants.RIGHT_PAR:
-                // stack.pop();
-                // break;
-                // // Closing brace
-                // case Constants.RIGHT_BRACE:
-                // stack.pop();
-                // break;
-                // // Closing bracket
-                // case Constants.RIGHT_BRACKET:
-                // stack.pop();
-                // break;
+                // If closing character, pop from stack
+                case Constants.RIGHT_PAR:
+                    System.out.println("Found closing parenthesis");
+                    if (stack.size() > 0)
+                        stack.pop();
+                    break;
+                // Closing brace
+                case Constants.RIGHT_BRACE:
+                    System.out.println("Found closing brace");
+                    if (stack.size() > 0)
+                        stack.pop();
+                    break;
+                // Closing bracket
+                case Constants.RIGHT_BRACKET:
+                    System.out.println("Found closing bracket");
+                    if (stack.size() > 0)
+                        stack.pop();
+                    break;
 
                 default:
                     break;
             }
 
         }
+        System.out.println("Stack size: " + stack.size());
         return stack.isEmpty();
+
+    }
+
+    public boolean isFileBalanced() {
+        return isBalanced;
     }
 
     public String convert2Postfix(String expression) {
@@ -216,6 +217,21 @@ public class Validation {
         }
 
         return number;
+    }
+
+    public boolean isValidStatement(String line) {
+        try {
+            if (!isBalanced(line))
+                return false;
+            String result = convert2Postfix(line);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isValidMethod(String line) {
+        return false;
     }
 
     public void setExpression(String expression) {

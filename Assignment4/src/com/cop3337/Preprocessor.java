@@ -37,8 +37,16 @@ public class Preprocessor {
         }
         if (result == JFileChooser.APPROVE_OPTION) {
             System.out.println("Successfully loaded file");
+
             validator.parseFile(file);
+
+            if (validator.isFileBalanced()) {
+                System.out.println("File is balanced with respect to {, ( or [");
+            } else {
+                System.out.println("Error: File is not balanced witrh respect to (),{}, or []");
+            }
         }
+
     }
 
     public File getFile() {
