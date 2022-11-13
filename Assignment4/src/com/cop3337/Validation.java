@@ -20,11 +20,8 @@ import javax.sound.sampled.Line;
 
 public class Validation {
 
-    private FileInputStream fis;
     private BufferedReader stringBuffer;
     private Stack<Character> stack;
-    private String expression = null;
-    private int length = -1;
     private boolean isBalanced = false;
     private HashMap<Character, Integer> missingChars;
     private boolean isClass = false;
@@ -46,9 +43,12 @@ public class Validation {
 
             // Loop through the lines and push to lines linked list
             while ((line = stringBuffer.readLine()) != null) {
+                // If a file line contains the string "public class", and it is the FIRST time
+                // the string has been seen, the file is a Java class.
+
+                // That way we can parse one java file with several classes but the file
+                // contains the File class at the top
                 if (line.toLowerCase().contains("public class") && !isClass) {
-                    // If a file line contains the string "public class", and it is the FIRST time
-                    // the string has been seen, the file is a Java class.
                     isClass = true;
                 }
                 isBalanced = isBalanced(line);
@@ -60,6 +60,23 @@ public class Validation {
 
     }
 
+    /**
+     * Function that is called for every line in the fine.
+     * Strips the whitespace of string line, explodes the line into char array.
+     * 
+     * Loops through the array of characters in the line.
+     * If an opening delimiter is found, that character is pushed into the stack.
+     * If closing delimiter is found, check the stack size, if valid, pop last
+     * element from stack.
+     * 
+     * Example: ({[ }) Will throw an error because there are 3 characters being
+     * pushed into the stack, but when the only two closing delimiters are found,
+     * stack.isEmpty() function returns false because there is an unbalance of
+     * delimiters.
+     * 
+     * @param s
+     * @return Boolean, stack empty or not
+     */
     private boolean isBalanced(String s) {
         // Remove whitespace from line. Space is useless in this scenario.
         s = s.trim();
@@ -120,18 +137,35 @@ public class Validation {
 
     }
 
+    /**
+     * Accessor for flexibility
+     * 
+     * @return isBalanced (boolean)
+     */
     public boolean isFileBalanced() {
         return isBalanced;
+    }
+
+    public boolean fileIsClass() {
+        return isClass;
     }
 
     public Stack<Character> getStack() {
         return stack;
     }
 
+    // Unimplemented. The idea was to add the missing char and line number to the
+    // hashmap, but when we come across the closing sign, it is hard to traverse the
+    // hashmap looking for the opening delimiter
+
     public HashMap<Character, Integer> getMissingChars() {
         return missingChars;
     }
 
+    /**
+     * The methods below were implemented to follow the logic from textbook. None of
+     * these methods are called in the logic flow of the assignment.
+     */
     public String convert2Postfix(String expression) {
         Stack<Object> stk = new Stack<>();
         StringBuilder postfix = new StringBuilder();
@@ -249,8 +283,4 @@ public class Validation {
         return false;
     }
 
-    public void setExpression(String expression) {
-        this.expression = expression;
-        this.length = expression.length();
-    }
 }

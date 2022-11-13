@@ -22,6 +22,10 @@ public class Preprocessor {
 
             System.out.println("File is balanced with respect to {, ( or [");
 
+            if (validator.fileIsClass()) {
+                System.out.println("File is a Java class");
+            }
+
         } else {
 
             JOptionPane.showMessageDialog(null, "Error, file is unbalanced with respect to delimiters.");

@@ -6,6 +6,15 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+/**
+ * Author: Diego Matheus, David Ulloa
+ * 
+ * This program loads a java or txt file, and checks for these delimiters
+ * '()','[]', '{}'
+ * 
+ * If a pair is missing its closing delimiter, the program will throw an error.
+ * Also the program recognizes if the file is a java class.
+ */
 class Main {
   public static void main(String[] args) {
     JFileChooser fileChooser = new JFileChooser();
