@@ -1,52 +1,32 @@
 package com.cop3337;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.nio.Buffer;
 
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Preprocessor {
-    private FileNameExtensionFilter filter;
+
     private File file;
-    private JFileChooser fileChooser;
     private Validation validator;
 
     public Preprocessor() {
-        this.fileChooser = new JFileChooser();
-        this.filter = new FileNameExtensionFilter("Java and txt files", "java", "txt");
-        this.fileChooser.setFileFilter(filter);
         this.validator = new Validation();
     }
 
-    public void chooseFile() {
+    public void loadFile(File file) {
+        this.file = file;
 
-        int result = fileChooser.showOpenDialog(null);
+        validator.parseFile(file);
 
-        try {
+        if (validator.isFileBalanced()) {
 
-            this.file = fileChooser.getSelectedFile();
+            System.out.println("File is balanced with respect to {, ( or [");
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Couldn't find file");
-            e.printStackTrace();
+        } else {
+
+            JOptionPane.showMessageDialog(null, "Error, file is unbalanced with respect to delimiters.");
+
         }
-        if (result == JFileChooser.APPROVE_OPTION) {
-            System.out.println("Successfully loaded file");
-
-            validator.parseFile(file);
-
-            if (validator.isFileBalanced()) {
-                System.out.println("File is balanced with respect to {, ( or [");
-            } else {
-                System.out.println("Error: File is not balanced witrh respect to (),{}, or []");
-            }
-        }
-
     }
 
     public File getFile() {

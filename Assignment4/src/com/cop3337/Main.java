@@ -2,12 +2,38 @@ package com.cop3337;
 
 import java.io.File;
 
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 class Main {
   public static void main(String[] args) {
-    System.out.println("Hello World: Diego Matheus & David Ulloa");
+    JFileChooser fileChooser = new JFileChooser();
+    FileNameExtensionFilter filter = new FileNameExtensionFilter("Java and txt files", "java", "txt");
+    fileChooser.setFileFilter(filter);
+    File file = null;
 
-    Preprocessor p = new Preprocessor();
-    p.chooseFile();
+    int result = fileChooser.showOpenDialog(null);
+
+    try {
+
+      file = fileChooser.getSelectedFile();
+
+    } catch (Exception e) {
+
+      JOptionPane.showMessageDialog(null, "Couldn't find file");
+      e.printStackTrace();
+
+    }
+
+    if (result == JFileChooser.APPROVE_OPTION) {
+
+      System.out.println("Successfully loaded file");
+
+      Preprocessor preprocessor = new Preprocessor();
+      preprocessor.loadFile(file);
+
+    }
 
   }
 }

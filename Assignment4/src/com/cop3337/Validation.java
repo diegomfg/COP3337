@@ -25,13 +25,13 @@ public class Validation {
     private Stack<Character> stack;
     private String expression = null;
     private int length = -1;
-    private LinkedList<String> fileLines = null;
     private boolean isBalanced = false;
-    private String[] rt_list = { "void", "boolean", "int", "double", "String", "Integer" };
+    private HashMap<Character, Integer> missingChars;
+    private boolean isClass = false;
 
     public Validation() {
         stack = new Stack<Character>();
-        fileLines = new LinkedList<String>();
+        missingChars = new HashMap<Character, Integer>();
     }
 
     public void parseFile(File file) {
@@ -39,17 +39,18 @@ public class Validation {
         System.out.println("parsingFile...");
 
         try {
+
             stringBuffer = new BufferedReader(new FileReader(file));
+
             String line;
 
             // Loop through the lines and push to lines linked list
             while ((line = stringBuffer.readLine()) != null) {
-
-                fileLines.push(line);
-
-                // 1) Pass each line to the delimitersValidation
-                // 2) Check for 'Public' 'class' 'classname' '{' -> push to stack (check for the
-                // closing brace and state if file is valid or not given {})
+                if (line.toLowerCase().contains("public class") && !isClass) {
+                    // If a file line contains the string "public class", and it is the FIRST time
+                    // the string has been seen, the file is a Java class.
+                    isClass = true;
+                }
                 isBalanced = isBalanced(line);
             }
 
@@ -60,30 +61,36 @@ public class Validation {
     }
 
     private boolean isBalanced(String s) {
-        // refactor this
+        // Remove whitespace from line. Space is useless in this scenario.
         s = s.trim();
+        // Convert the line to character array so that we can loop through it.
         char[] chars = s.toCharArray();
 
         for (int index = 0; index < chars.length; index++) {
 
+            // Get the current character of the line
             char c = chars[index];
 
             switch (c) {
                 // If character is an opening character, push to stack
                 case Constants.LEFT_PAR:
                     System.out.println("Found opening parenthesis");
+
                     stack.push('(');
                     break;
                 // Opening brace
                 case Constants.LEFT_BRACE:
                     System.out.println("Found opening brace");
+
                     stack.push('{');
                     break;
                 // Opening bracket
                 case Constants.LEFT_BRACKET:
                     System.out.println("Found opening bracket");
+
                     stack.push('[');
                     break;
+
                 // If closing character, pop from stack
                 case Constants.RIGHT_PAR:
                     System.out.println("Found closing parenthesis");
@@ -115,6 +122,14 @@ public class Validation {
 
     public boolean isFileBalanced() {
         return isBalanced;
+    }
+
+    public Stack<Character> getStack() {
+        return stack;
+    }
+
+    public HashMap<Character, Integer> getMissingChars() {
+        return missingChars;
     }
 
     public String convert2Postfix(String expression) {
