@@ -7,15 +7,16 @@ public class Main {
     // Add third option for archiving old words
     // Keep old words in a separate list
 
+    Dictionary dictionary = new Dictionary();
+
     Word w = new Word("Apple", new WordMeaning("One of the most famous fruits"));
     w.addMeaning(new WordMeaning("Test meaning"));
     w.addMeaning(new WordMeaning("Test 2 meaning"));
-    System.out.println(w.toString());
 
     Word b = new Word("Cat", new WordMeaning("Animal"));
     b.addMeaning(new WordMeaning("Test 222"));
     b.addMeaning(new WordMeaning("LSlslsls"));
 
-    System.out.println(b.toString());
+    dictionary.addNewWord();
   }
 }
