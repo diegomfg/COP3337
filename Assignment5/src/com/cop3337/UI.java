@@ -1,3 +1,4 @@
+
 import javax.swing.JOptionPane;
 
 public class UI {
@@ -32,5 +33,10 @@ public class UI {
         }
 
         return result;
+    }
+
+    public void showError(String errorMessage){
+        // JOptionPane.showMessageDialog(null, errorMessage);
+        JOptionPane.showMessageDialog(null, errorMessage, "Invalid input", 3);
     }
 }

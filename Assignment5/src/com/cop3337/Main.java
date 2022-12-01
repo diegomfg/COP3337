@@ -1,22 +1,28 @@
 public class Main {
   public static void main(String[] args) {
     // Show menu
-    // Option 1: Insert word (Word Object can have different meanings, insert to
-    // stack)
+    // Option 1: Insert word (Word Object can have different meanings, insert to stack
     // Option 2: List words and meanings
     // Add third option for archiving old words
     // Keep old words in a separate list
-
+    UI window = new UI();
     Dictionary dictionary = new Dictionary();
 
-    Word w = new Word("Apple", new WordMeaning("One of the most famous fruits"));
-    w.addMeaning(new WordMeaning("Test meaning"));
-    w.addMeaning(new WordMeaning("Test 2 meaning"));
+    String word = window.getInput(InputTypes.NEW_WORD);
+    String meaning = window.getInput(InputTypes.NEW_MEANING);
 
-    Word b = new Word("Cat", new WordMeaning("Animal"));
-    b.addMeaning(new WordMeaning("Test 222"));
-    b.addMeaning(new WordMeaning("LSlslsls"));
+    // If empty
+    if(word.isEmpty() || meaning.isEmpty()){
+      window.showError("Word or meaning cannot be empty");
+    }
+    
+    Word newword = new Word(word, new WordMeaning(meaning));
 
-    dictionary.addNewWord();
+    dictionary.addNewWord(newword);
+    dictionary.addNewWord(new Word("Katana", new WordMeaning("Sword")));
+    dictionary.addNewWord(new Word("Knife", new WordMeaning("Sword Two")));
+
+    dictionary.printList();
+
   }
 }

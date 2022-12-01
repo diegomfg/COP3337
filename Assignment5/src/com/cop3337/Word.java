@@ -3,10 +3,14 @@ import java.util.Stack;
 public class Word {
   private Stack<WordMeaning> meanings = new Stack<WordMeaning>();
   private String word;
+  // Next Node
+  public Word next;
 
   public Word(String word, WordMeaning meaning) {
     this.word = word;
     this.meanings.push(meaning);
+    // Linking the node to the next node in the link
+    this.next = null;
   }
 
   public String getWord() {
