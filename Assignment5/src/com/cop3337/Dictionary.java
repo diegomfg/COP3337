@@ -11,6 +11,10 @@ public class Dictionary {
     return this.wordList;
   }
 
+  public String printDeprecatedWords(){
+    return this.deprecateWordList.getWordListString();
+  }
+
   public WordList getDeprecateWordList() {
     return this.deprecateWordList;
   }
@@ -21,7 +25,8 @@ public class Dictionary {
   }
 
   public void deprecateWord(String word) {
-    deprecateWordList.deprecate(word);
+    Word deprecated = deprecateWordList.deprecate(word);
+    this.deprecateWordList.add(deprecated);
   }
 
   public String printList() {

@@ -56,23 +56,23 @@ public class WordList {
 
   // Loops through the Word nodes and adds a new WordMeaning to the Word object
   public void addNewMeaningTo(String word, String meaning) {
-    Word current = head;
-    while (current != null) {
-      if (current.getWord().equals(word)) {
-        current.addMeaning(new WordMeaning(meaning));
+    Word current2 = head;
+    while (current2 != null) {
+      if (current2.getWord().equals(word)) {
+        current2.addMeaning(new WordMeaning(meaning));
       }
-      current = current.next;
+      current2 = current2.next;
     }
   }
 
-  public void deprecate(String word) {
-    Word current = head;
-    Word next = current.next;
-    while (current != null) {
-      if (current.getWord().equalsIgnoreCase(word)) {
-        current = next;
+  public Word deprecate(String word) {
+    Word temp = this.head;
+    while (temp != null) {
+      if (temp.getWord().equalsIgnoreCase(word)) {
+        return temp;
       }
-      current = current.next;
+      temp = this.head.next;
     }
+    return temp;
   }
 }

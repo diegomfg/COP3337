@@ -13,7 +13,8 @@ public class Main {
         "2) Insert new word\n" +
         "3) Insert new meaning to word\n" +
         "4) Deprecate word\n" +
-        "5) Exit";
+        "5) See deprecated words\n" +
+        "6) Exit";
 
     // Creates the test entities
     /**
@@ -29,7 +30,7 @@ public class Main {
     String option = window.getInput(menu, InputTypes.OPTION_MENU);
     int intOption = Integer.parseInt(option);
 
-    while (intOption != 5) {
+    while (intOption != 6) {
       switch (intOption) {
         case 1:
           window.display(dictionary.printList());
@@ -77,6 +78,9 @@ public class Main {
           dictionary.deprecateWord(deprecatedWord);
           break;
 
+        case 5:
+          window.display(dictionary.printDeprecatedWords());
+        break;
         default:
           window.display("Wrong option");
           break;
