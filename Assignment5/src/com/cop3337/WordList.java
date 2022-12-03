@@ -33,4 +33,19 @@ public class WordList{
       current = current.next;
     }
   }
+
+  public int getSize(){
+    return size;
+  }
+
+  public String getWordListString(){
+    StringBuilder stringResult = new StringBuilder();
+    Word current = this.head;
+    while(current != null){
+      stringResult.append(current.toString());
+      current = current.next;
+    }
+
+    return stringResult.toString();
+  }
 }

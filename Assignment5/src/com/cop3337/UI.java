@@ -13,7 +13,7 @@ public class UI {
 
     }
 
-    public String getInput(InputTypes types) {
+    public String getInput(String message, InputTypes types) {
 
         String result;
 
@@ -26,17 +26,19 @@ public class UI {
                 result = JOptionPane.showInputDialog(null, "Please enter the word meaning");
                 break;
 
+            case OPTION_MENU:
+                result = JOptionPane.showInputDialog(null, message);
+            break;
             default:
                 JOptionPane.showMessageDialog(null, "Error, wrong input type");
                 result = "";
-                break;
+            break;
         }
 
         return result;
     }
 
     public void showError(String errorMessage){
-        // JOptionPane.showMessageDialog(null, errorMessage);
         JOptionPane.showMessageDialog(null, errorMessage, "Invalid input", 3);
     }
 }

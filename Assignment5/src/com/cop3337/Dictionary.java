@@ -25,7 +25,7 @@ public class Dictionary {
     // deprecateWordList.insert(wordList.get(word));
   }
 
-  public void printList(){
-    this.wordList.printList();
+  public String printList(){
+    return this.wordList.getWordListString();
   }
 }
