@@ -1,10 +1,12 @@
-public class WordList{
+import javax.swing.JOptionPane;
+
+public class WordList {
   // Design linked list class
   private Word head;
   private int size;
 
-  public void add(Word insertWord){
-    if(this.head == null){
+  public void add(Word insertWord) {
+    if (this.head == null) {
 
       size++;
 
@@ -14,7 +16,7 @@ public class WordList{
 
       Word last = head;
 
-      while(last.next != null){
+      while (last.next != null) {
 
         size++;
 
@@ -25,27 +27,52 @@ public class WordList{
     }
   }
 
-  public void printList(){
+  // Prints all the elements by traversing the nodes
+  public void printList() {
     Word current = this.head;
 
-    while(current != null){
+    while (current != null) {
       System.out.println(current.toString());
       current = current.next;
     }
   }
 
-  public int getSize(){
+  // Returns the size of the list
+  public int getSize() {
     return size;
   }
 
-  public String getWordListString(){
+  // Returns the String representation of all the words in the list
+  public String getWordListString() {
     StringBuilder stringResult = new StringBuilder();
     Word current = this.head;
-    while(current != null){
+    while (current != null) {
       stringResult.append(current.toString());
       current = current.next;
     }
 
     return stringResult.toString();
+  }
+
+  // Loops through the Word nodes and adds a new WordMeaning to the Word object
+  public void addNewMeaningTo(String word, String meaning) {
+    Word current = head;
+    while (current != null) {
+      if (current.getWord().equals(word)) {
+        current.addMeaning(new WordMeaning(meaning));
+      }
+      current = current.next;
+    }
+  }
+
+  public void deprecate(String word) {
+    Word current = head;
+    Word next = current.next;
+    while (current != null) {
+      if (current.getWord().equalsIgnoreCase(word)) {
+        current = next;
+      }
+      current = current.next;
+    }
   }
 }

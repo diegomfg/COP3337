@@ -21,11 +21,14 @@ public class Dictionary {
   }
 
   public void deprecateWord(String word) {
-    // Should this be the logic?
-    // deprecateWordList.insert(wordList.get(word));
+    deprecateWordList.deprecate(word);
   }
 
-  public String printList(){
+  public String printList() {
     return this.wordList.getWordListString();
+  }
+
+  public void addNewMeaningTo(String word, String meaning) {
+    this.wordList.addNewMeaningTo(word, meaning);
   }
 }
